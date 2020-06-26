@@ -9,21 +9,49 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Header;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.*;
+import java.sql.*;
+import java.util.*;
+ 
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.*;
+
 import BLL.ChuyenBayBLL;
 import BLL.KhachHangBLL;
 import BLL.MayBayBLL;
 import BLL.TuyenBayBLL;
+import BLL.UserBLL;
 import DTO.ChuyenBayDTO;
+import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
 import DTO.MayBayDTO;
 import DTO.TuyenBayDTO;
+import DTO.UserDTO;
 import DTO.VeChuyenBayDTO;
+import UTILS.ConnectionUtil;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -191,6 +219,14 @@ public class Thanhtoan extends JFrame{
 		btnNewButton.setBounds(455, 285, 120, 50);
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setBackground(new Color(57,153,255));
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				print();
+				//ex();
+			}
+
+		});
          contentPane.add(btnNewButton);
          
          JScrollPane scrollPane = new JScrollPane();
@@ -213,7 +249,7 @@ public class Thanhtoan extends JFrame{
 	public void loadAllChuyenBay(String cb) throws ClassNotFoundException {
 		
 		 //tạo control DefaultTableModel để hiển thị danh sách ChuyenBay
-	 String[] header = { "Mã chuyến bay", "Máy Bay","Ngày giờ", "Thời gian bay","Điểm đi","Điểm đến","Loại vé"};
+	 String[] header = { "Mã chuyến bay", "Máy Bay","Ngày giờ", "Thời gian bay","Điểm đi","Điểm đến"};
 	 DefaultTableModel dtm = new DefaultTableModel(header, 0);
 	 //lấy danh sách ChuyenBayDTO (gọi hàm getAllChuyenBay() trong ChuyenBayBLL)
 	 ArrayList<ChuyenBayDTO> arr = new ArrayList<ChuyenBayDTO>();
@@ -274,4 +310,141 @@ public class Thanhtoan extends JFrame{
 		loadAllChuyenBay(cb.getMa_cb());
 		
 	}
+	public void print(){
+		// Tạo đối tượng tài liệu
+					Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+					HoaDonDTO hdDTO = new HoaDonDTO();
+					ArrayList<VeChuyenBayDTO> listDTO = new ArrayList<VeChuyenBayDTO>();
+					try {
+						String file_name="C:\\Users\\ASUS\\Desktop\\in.pdf";
+						// Tạo đối tượng PdfWriter
+						PdfWriter.getInstance(document, new FileOutputStream(file_name));
+						// Mở file để thực hiện ghi
+						document.open(); 
+						// Thêm nội dung sử dụng add function
+						Paragraph head=new Paragraph("Hóa Đơn");
+						head.setAlignment(Paragraph.ALIGN_CENTER);//căn giữa
+						document.add(head);
+						Paragraph bordertop= new Paragraph("Mã hóa đơn: " +  hdDTO.getMa_hd());
+						Paragraph para2= new Paragraph("Tên khách hàng: " + textField_5.getText());
+						Paragraph para3= new Paragraph("Ngày lập hóa đơn:" + hdDTO.getNgay_Lap());
+						Paragraph para4 = new Paragraph("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+						document.add(bordertop);
+			            document.add(para2);
+			            document.add(para3);
+			            document.add(para4);
+			            PdfPTable table=new PdfPTable(6);
+			            PdfPCell c1 = new PdfPCell(new Phrase("Mã chuyến bay"));
+			            table.addCell(c1);
+			            c1 = new PdfPCell(new Phrase("Mã máy bay"));
+			            table.addCell(c1);
+			            c1 = new PdfPCell(new Phrase("Ngày giờ"));
+			            table.addCell(c1);
+			            c1 = new PdfPCell(new Phrase("Điểm đến"));
+			            table.addCell(c1);
+			            c1 = new PdfPCell(new Phrase("Loại vé"));
+			            table.addCell(c1);
+			            c1 = new PdfPCell(new Phrase("Thành tiền"));
+			            table.addCell(c1);
+			            for (VeChuyenBayDTO vcb : listDTO) {
+			                table.addCell(new Phrase(""+vcb.getMa_cb()));
+			                table.addCell(new Phrase(""+vcb.getMa_dongia()));
+			                table.addCell(new Phrase(""+vcb.getMa_ve_cb()));
+			                table.addCell(new Phrase(""+hdDTO.getMa_nv()));
+			                table.addCell(new Phrase(""+hdDTO.getThanh_tien()));
+			            }
+			            document.add(table);
+			            Paragraph para5 = new Paragraph("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+			            document.add(para5);
+			            Paragraph para6 = new Paragraph("     Tổng cộng: "+hdDTO.getThanh_tien());
+			            document.add(para6);
+						// Đóng File
+						document.close();
+						System.out.println("Write file succes!");
+					} catch (FileNotFoundException | DocumentException e) {
+						e.printStackTrace();
+					}
+				}
+	public void ex() {
+		
+		        String jdbcURL = "jdbc:mysql://localhost:3306/qlbvmb";
+		        String username = "root";
+		        String password = "123456";
+		 
+		        String excelFilePath = "C:/Users/ASUS/Desktop/ex.xlsx";
+		 
+		        int batchSize = 20;
+		 
+		        Connection connection = null;
+		 
+		        try {
+		            long start = System.currentTimeMillis();
+		             
+		            FileInputStream inputStream = new FileInputStream(excelFilePath);
+		 
+		            Workbook workbook = new XSSFWorkbook(inputStream);
+		 
+		            Sheet firstSheet = workbook.getSheetAt(0);
+		            Iterator<Row> rowIterator = firstSheet.iterator();
+		 
+		            connection = DriverManager.getConnection(jdbcURL, username, password);
+		            connection.setAutoCommit(false);
+		  
+		            String sql = "INSERT INTO san_bay (ma_sb,ten_sb) VALUES ( ?, ?)";
+		            PreparedStatement statement = connection.prepareStatement(sql);    
+		             
+		            int count = 0;
+		             
+		            rowIterator.next(); // skip the header row
+		             
+		            while (rowIterator.hasNext()) {
+		                Row nextRow = rowIterator.next();
+		                Iterator<Cell> cellIterator = nextRow.cellIterator();
+		 
+		                while (cellIterator.hasNext()) {
+		                    Cell nextCell = cellIterator.next();
+		 
+		                    int columnIndex = nextCell.getColumnIndex();
+		 
+		                    switch (columnIndex) {
+		                    case 0:
+		                        String ma_sb = nextCell.getStringCellValue();
+		                        statement.setString(1, ma_sb);
+		                        break;
+		                    case 1:
+		                    	String ten_sb = nextCell.getStringCellValue();
+		                        statement.setString(1, ten_sb);
+		 
+		                }
+		                 
+		                statement.addBatch();
+		                 
+		                if (count % batchSize == 0) {
+		                    statement.executeBatch();
+		                }              
+		 
+		            }
+		 
+		            workbook.close();
+		             
+		            // execute the remaining queries
+		            statement.executeBatch();
+		  
+		            connection.commit();
+		            connection.close();
+		             
+		            long end = System.currentTimeMillis();
+		            System.out.printf("Import done in %d ms\n", (end - start));
+		             
+		        }} catch (IOException ex1) {
+		            System.out.println("Error reading file");
+		            ex1.printStackTrace();
+		        } catch (SQLException ex2) {
+		            System.out.println("Database error");
+		            ex2.printStackTrace();
+		        }
+		 
+	}
+		
+	
 }

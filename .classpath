@@ -8,5 +8,12 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/ASUS/eclipse/mysql-connector-java-8.0.20.jar"/>
 	<classpathentry kind="lib" path="C:/Users/ASUS/eclipse/JTattoo-1.6.13.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ASUS/Desktop/itextpdf-5.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ASUS/Desktop/poi-4.1.2/poi-4.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ASUS/Desktop/poi-4.1.2/poi-examples-4.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ASUS/Desktop/poi-4.1.2/poi-excelant-4.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ASUS/Desktop/poi-4.1.2/poi-ooxml-4.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ASUS/Desktop/poi-4.1.2/poi-ooxml-schemas-4.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ASUS/Desktop/poi-4.1.2/poi-scratchpad-4.1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
