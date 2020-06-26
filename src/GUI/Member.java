@@ -46,7 +46,7 @@ public class Member extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Member frame = new Member();
+				Member frame = new Member();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -123,7 +123,7 @@ public class Member extends JFrame {
 						} else {
 							Action action = new Action();
 							action.setVisible(true);
-			
+							try {
 							ArrayList<KhachHangDTO> kh = new ArrayList<KhachHangDTO>();
 							KhachHangBLL khbll = new KhachHangBLL();
 							KhachHangDTO khDto =new KhachHangDTO();
@@ -135,7 +135,12 @@ public class Member extends JFrame {
 							khDto.setSDT(khDto.getSDT());
 							khDto.setDiaChi(khDto.getDiaChi());
 							action.getkh(khDto);
-							action.loadAllChuyenBay(khDto);
+							action.getlscb(khDto);
+							} catch (Exception e1) {
+								// TODO: handle exception
+							}
+							
+							
 						}
 
 					}
@@ -154,10 +159,6 @@ public class Member extends JFrame {
 				
 			}
 
-			private KhachHangBLL KhachHangBLL() {
-				// TODO Auto-generated method stub
-				return null;
-			}
 		});
 		
 		passwordField = new JPasswordField();

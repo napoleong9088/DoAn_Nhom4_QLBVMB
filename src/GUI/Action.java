@@ -62,7 +62,7 @@ public class Action extends JFrame {
 	public Action() throws ClassNotFoundException {
 		font();
 		//getkh(khDto);
-		//loadAllChuyenBay(khDto);
+		//loadAllChuyenBay();
 	}
 
 	/**
@@ -110,12 +110,12 @@ public class Action extends JFrame {
 		
 		txtcmndpp = new JTextField();
 		txtcmndpp.setColumns(10);
-		txtcmndpp.setBounds(210, 60, 150, 20);
+		txtcmndpp.setBounds(10,110, 150, 20);
 		
 		
 		txtkhachhangemail = new JTextField();
 		txtkhachhangemail.setColumns(10);
-		txtkhachhangemail.setBounds(10, 110,150,20);
+		txtkhachhangemail.setBounds(210, 60,150,20);
 		
 		
 		JLabel lbldiachikh = new JLabel("Địa chỉ:");
@@ -193,6 +193,21 @@ public class Action extends JFrame {
 				try {
 					option = new Option();
 					option.setVisible(true);
+					try {
+						ArrayList<KhachHangDTO> kh = new ArrayList<KhachHangDTO>();
+						KhachHangBLL khbll = new KhachHangBLL();
+						KhachHangDTO khDto =new KhachHangDTO();
+						khDto.setEmail(txtkhachhangemail.getText());
+						kh = khbll.getKhachHangByEmail(khDto);
+						khDto = kh.get(0);
+						khDto.setTen_kh(khDto.getTen_kh());
+						khDto.setCmnd(khDto.getCmnd());
+						khDto.setSDT(khDto.getSDT());
+						khDto.setDiaChi(khDto.getDiaChi());
+						option.getkh(khDto);
+						} catch (Exception e1) {
+							// TODO: handle exception
+						}
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -203,7 +218,7 @@ public class Action extends JFrame {
 		panel.add(btntV);
 		
 		
-		JPanel panel_1 = new JPanel();
+		/*JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Lịch sử chuyến bay", null, panel_1, null);
 		panel_1.setLayout(null);
 		
@@ -219,7 +234,7 @@ public class Action extends JFrame {
 		
 		
 		table = new JTable();
-		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(table);*/
 	}
 	public void getkh(KhachHangDTO khDto) throws ClassNotFoundException {
 		/*ArrayList<KhachHangDTO> kh = new ArrayList<KhachHangDTO>();
@@ -235,9 +250,9 @@ public class Action extends JFrame {
 	  * Get all chuyenbay to display table.
 	 * @throws ClassNotFoundException 
 	  */
-	 public void loadAllChuyenBay(KhachHangDTO khDto) throws ClassNotFoundException {
+	 public void loadAllChuyenBay(String kh) throws ClassNotFoundException {
 		 //tạo control DefaultTableModel để hiển thị danh sách ChuyenBay
-	 String[] header = { "Mã chuyến bay", "Ngày giờ", "Thời gian bay","Điểm đi","Điểm đến", "Số ghế hạng 1", "Số ghế hạng 2", "Mã máy bay" };
+	 String[] header = { "Mã chuyến bay", "Ngày giờ", "Thời gian bay","Điểm đi","Điểm đến", "Mã máy bay" };
 	 DefaultTableModel dtm = new DefaultTableModel(header, 0);
 	 //lấy danh sách ChuyenBayDTO (gọi hàm getAllChuyenBay() trong ChuyenBayBLL)
 	 ArrayList<ChuyenBayDTO> arr = new ArrayList<ChuyenBayDTO>();
@@ -258,7 +273,15 @@ public class Action extends JFrame {
 	 VeChuyenBayDTO VeChuyenBayDTO = new VeChuyenBayDTO();
 	 ArrayList<VeChuyenBayDTO> vechuyenbay = new ArrayList<VeChuyenBayDTO>();
 	 VeChuyenBayBLL VeChuyenBayBLL = new VeChuyenBayBLL(); 
-	 	 
+	 
+	 ArrayList<KhachHangDTO> khs = new ArrayList<KhachHangDTO>();
+	 KhachHangBLL khbll = new KhachHangBLL();
+	 KhachHangDTO khDto =new KhachHangDTO();
+
+	 khDto.setEmail(kh);
+	 khs = khbll.getKhachHangByEmail(khDto);
+	 khDto = khs.get(0);
+
 	 HoaDonDTO.setMa_kh(khDto.getMa_kh());
 	 hoadon = HoaDonBLL.getHoaDonByma_kh(HoaDonDTO);
 	 HoaDonDTO = hoadon.get(0);
@@ -292,6 +315,11 @@ public class Action extends JFrame {
 	 }
 	 table.setModel(dtm);
 	 }
+	 public void getlscb(KhachHangDTO kh) throws ClassNotFoundException {
+			txtkhachhangemail.setText(kh.getEmail());
+			//loadAllChuyenBay(kh.getEmail());
+			
+		}
 }
 
 

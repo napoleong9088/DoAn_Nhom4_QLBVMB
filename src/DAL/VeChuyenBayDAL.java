@@ -236,5 +236,44 @@ public class VeChuyenBayDAL {
 			}
 			return result;
 		}
-
+		public ArrayList<VeChuyenBayDTO> getVeChuyenBayByMa_cb(VeChuyenBayDTO VeChuyenBayDTO) throws ClassNotFoundException {
+			
+			ArrayList<VeChuyenBayDTO> result = new ArrayList<VeChuyenBayDTO>();
+			String sqlSelectByma_ve_cb = "select * from ve_chuyen_bay where ma_cb = ?";
+				
+			try {
+					
+				conUtil = new ConnectionUtil();
+				con = conUtil.getConnection();
+				
+				preparedStatement = con.prepareStatement(sqlSelectByma_ve_cb);
+				preparedStatement.setString(1, VeChuyenBayDTO.getMa_cb());
+				resultSet  = preparedStatement.executeQuery();			
+				
+				while(resultSet.next()) {
+					VeChuyenBayDTO VeChuyenBay = new VeChuyenBayDTO();
+					VeChuyenBay.setMa_ve_cb(resultSet.getString("ma_ve_cb"));
+					VeChuyenBay.setMa_hd(resultSet.getString("ma_hd"));
+					VeChuyenBay.setMa_cb(resultSet.getString("ma_cb"));
+					VeChuyenBay.setMa_dongia(resultSet.getString("ma_don_gia"));
+					VeChuyenBay.setMa_hv(resultSet.getString("ma_hv"));
+					VeChuyenBay.setTinhtrangve(resultSet.getString("tinh_trang_ve"));
+					
+					result.add(VeChuyenBay);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					
+					con.close();
+					preparedStatement.close();
+					resultSet.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				  }
+			}
+			return result;
+		}
 }

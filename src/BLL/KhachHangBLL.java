@@ -12,7 +12,7 @@ public class KhachHangBLL {
 	 return KhachHangDAL.getAllKhachhang();
 	 }
 
-	 public ArrayList<KhachHangDTO> getKhachHangByma_hv(KhachHangDTO KhachHangDTO)throws ClassNotFoundException {
+	 public ArrayList<KhachHangDTO> getKhachHangByma_kh(KhachHangDTO KhachHangDTO)throws ClassNotFoundException {
 	 return KhachHangDAL.getKhachHangByMa_kh(KhachHangDTO);
 	 }
 

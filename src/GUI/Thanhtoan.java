@@ -10,11 +10,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BLL.ChuyenBayBLL;
+import BLL.KhachHangBLL;
 import BLL.MayBayBLL;
 import BLL.TuyenBayBLL;
 import DTO.ChuyenBayDTO;
+import DTO.KhachHangDTO;
 import DTO.MayBayDTO;
 import DTO.TuyenBayDTO;
+import DTO.VeChuyenBayDTO;
 
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -29,7 +32,6 @@ import javax.swing.JTable;
 
 public class Thanhtoan extends JFrame{
 	private JPanel contentPane;
-	private JTextField textField;
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_5;
@@ -37,6 +39,7 @@ public class Thanhtoan extends JFrame{
 	private JTextField textField_7;
 	private JTextField textField_8;
 	private JTable table ;
+	private JTextField txtma_cb;
     
 
 	public static void main(String[] args) {
@@ -54,10 +57,10 @@ public class Thanhtoan extends JFrame{
 
 	public Thanhtoan() throws ClassNotFoundException {
 		font();
-		loadAllChuyenBay();
+		//loadAllChuyenBay();
+		//getkh(khDto);
 	}
 	
-
 
 	public void  font() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,16 +81,6 @@ public class Thanhtoan extends JFrame{
 		lblNewLabel_0_1.setBounds(8, 15, 600, 22);
 		lblNewLabel_0_1.setForeground(new Color(57,153,255));
 		contentPane.add(lblNewLabel_0_1);
-		
-
-		JLabel lblNewLabel_1 = new JLabel("Ngày khởi hành: ");
-		lblNewLabel_1.setBounds(10, 45, 100, 14);
-		contentPane.add(lblNewLabel_1,BorderLayout.WEST);
-         
-		textField= new JTextField();
-		textField.setBounds(102, 43, 120, 20);
-		contentPane.add(textField,BorderLayout.WEST);
-		textField.setColumns(10);
 		
 		
 		JLabel lblNewLabel_3 = new JLabel("<_Điểm Đi__ __________ \n");
@@ -140,11 +133,11 @@ public class Thanhtoan extends JFrame{
 		textField_5.setColumns(10);
 		contentPane.add(textField_5);
 		
-		JLabel lblNewLabel_10 = new JLabel("Ngày sinh \n");
+		JLabel lblNewLabel_10 = new JLabel("CMND/PP");
 		lblNewLabel_10.setBounds(200, 177, 70, 14);
 		contentPane.add(lblNewLabel_10);
 		
-		JLabel lblNewLabel_11= new JLabel("Ví dụ:20/6/2020");
+		JLabel lblNewLabel_11= new JLabel("Ví dụ:351000000");
 		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_11.setBounds(200, 195, 200, 22);
 		contentPane.add(lblNewLabel_11);
@@ -173,10 +166,10 @@ public class Thanhtoan extends JFrame{
 		lblNewLabel_14.setBounds(400, 230, 83, 14);
 		contentPane.add(lblNewLabel_14);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(450, 230, 120, 20);
-		contentPane.add(textField_7);
+		textField_8 = new JTextField();
+		textField_8.setColumns(10);
+		textField_8.setBounds(450, 230, 120, 20);
+		contentPane.add(textField_8);
 		
 		JLabel lblNewLabel_15 = new JLabel("Chú ý !\n");
 		lblNewLabel_15.setBounds(10, 263, 83, 14);
@@ -205,19 +198,30 @@ public class Thanhtoan extends JFrame{
          contentPane.add(scrollPane);
          
         table =new JTable();
+        //loadAllChuyenBay();
         scrollPane.setViewportView(table);
+        
+        txtma_cb = new JTextField();
+        txtma_cb.setColumns(10);
+        txtma_cb.setBounds(104, 43, 120, 20);
+        contentPane.add(txtma_cb);
+        
+        JLabel tblma_cb = new JLabel("Mã chuyến bay");
+        tblma_cb.setBounds(10, 43, 100, 14);
+        contentPane.add(tblma_cb);
 	}
-	public void loadAllChuyenBay() throws ClassNotFoundException {
+	public void loadAllChuyenBay(String cb) throws ClassNotFoundException {
+		
 		 //tạo control DefaultTableModel để hiển thị danh sách ChuyenBay
 	 String[] header = { "Mã chuyến bay", "Máy Bay","Ngày giờ", "Thời gian bay","Điểm đi","Điểm đến","Loại vé"};
 	 DefaultTableModel dtm = new DefaultTableModel(header, 0);
 	 //lấy danh sách ChuyenBayDTO (gọi hàm getAllChuyenBay() trong ChuyenBayBLL)
 	 ArrayList<ChuyenBayDTO> arr = new ArrayList<ChuyenBayDTO>();
 	 ChuyenBayBLL ChuyenBayBLL = new ChuyenBayBLL();
-	 arr = ChuyenBayBLL.getAllChuyenBay();
-	 
-	 //Duyệt mảng ChuyenBayDTO vừa lấy được: arr
+	//Duyệt mảng ChuyenBayDTO vừa lấy được: arr
 	 ChuyenBayDTO ChuyenBayDTO = new ChuyenBayDTO();
+	 ChuyenBayDTO.setMa_cb(cb);	 
+	 arr = ChuyenBayBLL.getChuyenBayByma_cb(ChuyenBayDTO);
 	 
 	 TuyenBayDTO TuyenBayDTO = new TuyenBayDTO();
 	 ArrayList<TuyenBayDTO> tuyenbay = new ArrayList<TuyenBayDTO>();
@@ -247,11 +251,27 @@ public class Thanhtoan extends JFrame{
 		 String diem_di = TuyenBayDTO.getSanbaydi();
 		 String diem_den = TuyenBayDTO.getSanbayden();
 		 
-		 
+		 textField_2.setText(diem_di);
+		 textField_3.setText(diem_den);
 		 //tạo row để add vào control DefaultTableModel
 		 Object[] row = { ma_cb, ten_mb,ngaygio, thoigianbay,diem_di,diem_den};
 		 dtm.addRow(row);
 	 }
 	 table.setModel(dtm);
 	 }
+	public void getkh(KhachHangDTO khDto) throws ClassNotFoundException {
+		/*ArrayList<KhachHangDTO> kh = new ArrayList<KhachHangDTO>();
+		KhachHangBLL khbll = new KhachHangBLL();
+		kh = khbll.getKhachHangByma_kh(khDto);
+		khDto= kh.get(0);*/
+		textField_5.setText(khDto.getTen_kh());
+		textField_8.setText(khDto.getEmail());
+		textField_6.setText(khDto.getCmnd());
+		textField_7.setText(khDto.getSDT());
+	}
+	public void getcb(ChuyenBayDTO cb) throws ClassNotFoundException {
+		txtma_cb.setText(cb.getMa_cb());
+		loadAllChuyenBay(cb.getMa_cb());
+		
+	}
 }
