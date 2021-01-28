@@ -127,7 +127,7 @@ public class DonGiaDAL {
 		public int updateDonGia(DonGiaDTO DonGiaDTO) throws ClassNotFoundException {
 			// Khởi tạo mảng đối tượng DonGiaDTO để chứa kết quả truy vấn	
 			int result = 0;
-			String sqlUpdate = "update don_gia set VND=?, USD=?";
+			String sqlUpdate = "update don_gia set VND=?, USD=? where ma_don_gia=?";
 			
 			try {
 				//mở kết nối tới CSDL	
@@ -137,6 +137,7 @@ public class DonGiaDAL {
 				preparedStatement = con.prepareStatement(sqlUpdate);
 				preparedStatement.setInt(1, DonGiaDTO.getVND());
 				preparedStatement.setInt(2, DonGiaDTO.getUSD());
+				preparedStatement.setString(3, DonGiaDTO.getMa_dongia());
 				result = preparedStatement.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

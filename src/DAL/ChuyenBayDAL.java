@@ -138,7 +138,7 @@ public class ChuyenBayDAL {
 		public int updateChuyenBay(ChuyenBayDTO ChuyenBayDTO) throws ClassNotFoundException {
 			
 			int result = 0;
-			String sqlUpdate = "update chuyen_bay set ma_tuyen_bay=?,ngay_gio=?,thoi_gian_bay=?,so_ghe_hang_1=?,so_ghe_hang_2=?,ma_mb=?";
+			String sqlUpdate = "update chuyen_bay set ma_tuyen_bay=?,ngay_gio=?,thoi_gian_bay=?,so_ghe_hang_1=?,so_ghe_hang_2=?,ma_mb=? where ma_cb=?";
 			
 			try {
 			
@@ -150,9 +150,9 @@ public class ChuyenBayDAL {
 				preparedStatement.setString(2, ChuyenBayDTO.getMa_tuyenbay());
 				preparedStatement.setDate(3, (java.sql.Date) ChuyenBayDTO.getNgaygio());
 				preparedStatement.setInt(3, ChuyenBayDTO.getSoghehang1());
-				preparedStatement.setInt(3, ChuyenBayDTO.getSoghehang2());
-				preparedStatement.setString(3, ChuyenBayDTO.getMa_mb());
-
+				preparedStatement.setInt(4, ChuyenBayDTO.getSoghehang2());
+				preparedStatement.setString(5, ChuyenBayDTO.getMa_mb());
+				preparedStatement.setString(6, ChuyenBayDTO.getMa_cb());
 				result = preparedStatement.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

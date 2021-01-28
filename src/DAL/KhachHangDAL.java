@@ -137,7 +137,7 @@ public class KhachHangDAL {
 				public int updateKhachHang(KhachHangDTO KhachHangDTO) throws ClassNotFoundException {
 					// Khởi tạo mảng đối tượng KhachHangDTO để chứa kết quả truy vấn	
 					int result = 0;
-					String sqlUpdate = "update khach_hang set ten_kh=? ,sdt=?,cmnd_pp=?,dia_chi=?";
+					String sqlUpdate = "update khach_hang set ten_kh=? ,sdt=?,cmnd_pp=?,dia_chi=? where ma_kh=?";
 					
 					try {
 						//mở kết nối tới CSDL	
@@ -149,6 +149,7 @@ public class KhachHangDAL {
 						preparedStatement.setString(2, KhachHangDTO.getSDT());
 						preparedStatement.setString(3, KhachHangDTO.getCmnd());
 						preparedStatement.setString(4, KhachHangDTO.getDiaChi());
+						preparedStatement.setString(5, KhachHangDTO.getMa_kh());
 						result = preparedStatement.executeUpdate();
 					} catch (SQLException e) {
 						e.printStackTrace();

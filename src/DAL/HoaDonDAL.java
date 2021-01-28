@@ -134,7 +134,7 @@ public class HoaDonDAL {
 		public int updateHoaDon(HoaDonDTO HoaDonDTO) throws ClassNotFoundException {
 			// Khởi tạo mảng đối tượng HoaDonDTO để chứa kết quả truy vấn	
 			int result = 0;
-			String sqlUpdate = "update hoa_don set thanh_tien=?, ngay_lap=?, ma_nv=?, ma_kh=?";
+			String sqlUpdate = "update hoa_don set thanh_tien=?, ngay_lap=?, ma_nv=?, ma_kh=? where ma_hd=?";
 			
 			try {
 				//mở kết nối tới CSDL	
@@ -146,6 +146,7 @@ public class HoaDonDAL {
 				preparedStatement.setDate(2, (java.sql.Date) HoaDonDTO.getNgay_Lap());
 				preparedStatement.setString(3, HoaDonDTO.getMa_nv());
 				preparedStatement.setString(4, HoaDonDTO.getMa_kh());
+				preparedStatement.setString(5, HoaDonDTO.getMa_hd());
 				result = preparedStatement.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

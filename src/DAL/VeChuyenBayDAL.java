@@ -141,7 +141,7 @@ public class VeChuyenBayDAL {
 		public int updateVeChuyenBay(VeChuyenBayDTO VeChuyenBayDTO) throws ClassNotFoundException {
 			
 			int result = 0;
-			String sqlUpdate = "update ve_chuyen_bay set ma_hd=?,ma_cb=?,ma_don_gia=?,ma_hv=?,tinh_trang_ve=?";
+			String sqlUpdate = "update ve_chuyen_bay set ma_hd=?,ma_cb=?,ma_don_gia=?,ma_hv=?,tinh_trang_ve=? where ma_ve_cb=? ";
 			
 			try {
 			
@@ -154,6 +154,7 @@ public class VeChuyenBayDAL {
 				preparedStatement.setString(3, VeChuyenBayDTO.getMa_dongia());
 				preparedStatement.setString(4, VeChuyenBayDTO.getMa_hv());
 				preparedStatement.setString(5, VeChuyenBayDTO.getTinhtrangve());
+				preparedStatement.setString(6, VeChuyenBayDTO.getMa_ve_cb());
 				result = preparedStatement.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
