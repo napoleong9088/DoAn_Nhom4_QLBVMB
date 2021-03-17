@@ -30,4 +30,8 @@ public class TuyenBayBLL {
 	 int result = TuyenBayDAL.insertTuyenBay(TuyenBayDTO);
 	 return result;
 	 }
+	 
+	 public ArrayList<TuyenBayDTO> searchTuyenBayByma_tuyenbay(TuyenBayDTO TuyenBayDTO) throws ClassNotFoundException{
+		 return TuyenBayDAL.searchTuyenBayByMa_tuyenbay(TuyenBayDTO);
+		 }
 }

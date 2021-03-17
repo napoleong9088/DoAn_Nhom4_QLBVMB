@@ -186,5 +186,42 @@ public class TuyenBayDAL {
 				  }
 			}
 			return result;
+		}public ArrayList<TuyenBayDTO> searchTuyenBayByMa_tuyenbay(TuyenBayDTO TuyenBayDTO) throws ClassNotFoundException {
+			
+		ArrayList<TuyenBayDTO> result = new ArrayList<TuyenBayDTO>();
+		String sqlSelectByma_tuyenbay = "select * from tuyen_bay where san_bay_di=?,san_bay_den=?";
+			
+		try {
+				
+			conUtil = new ConnectionUtil();
+			con = conUtil.getConnection();
+			
+			preparedStatement = con.prepareStatement(sqlSelectByma_tuyenbay);
+			preparedStatement.setString(1, TuyenBayDTO.getMa_tuyenbay());
+			resultSet  = preparedStatement.executeQuery();			
+			
+			while(resultSet.next()) {
+				TuyenBayDTO TuyenBay = new TuyenBayDTO();
+				TuyenBay.setSanbaydi(resultSet.getString("san_bay_di"));
+				TuyenBay.setSanbayden(resultSet.getString("san_bay_den"));
+				
+				result.add(TuyenBay);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		finally {
+			try {
+				
+				con.close();
+				preparedStatement.close();
+				resultSet.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			  }
+		}
+		return result;
+	}
+		
+		
 }

@@ -196,7 +196,7 @@ public class ChuyenBayDAL {
 		}
 		public ArrayList<ChuyenBayDTO> getChuyenBayBydiem(TuyenBayDTO TuyenBayDto) throws ClassNotFoundException {
 			ArrayList<ChuyenBayDTO> result = new ArrayList<ChuyenBayDTO>();
-			String sql = "select * from chuyen_bay cb inner join tuyen_bay tb on cb.ma_tuyen_bay=tb.ma_tuyen_bay  where tb.san_bay_di = ? and tb.san_bay_den=? ";
+			String sql = "select * from chuyen_bay cb inner join tuyen_bay tb on cb.ma_tuyen_bay=tb.ma_tuyen_bay  where san_bay_di = ? and san_bay_den=? ";
 			TuyenBayDTO TuyenBayDTO = new TuyenBayDTO(); 
 			try {
 				conUtil = new ConnectionUtil();

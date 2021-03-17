@@ -28,10 +28,12 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 
 import BLL.ChuyenBayBLL;
+import BLL.HoaDonBLL;
 import BLL.KhachHangBLL;
 import BLL.MayBayBLL;
 import BLL.TuyenBayBLL;
 import BLL.UserBLL;
+import BLL.VeChuyenBayBLL;
 import DTO.ChuyenBayDTO;
 import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
@@ -222,7 +224,7 @@ public class Thanhtoan extends JFrame{
 		btnNewButton.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				print();
+				print(txtma_cb.getText());
 				//ex();
 			}
 
@@ -310,11 +312,22 @@ public class Thanhtoan extends JFrame{
 		loadAllChuyenBay(cb.getMa_cb());
 		
 	}
-	public void print(){
+	public void print(String mcb){
 		// Tạo đối tượng tài liệu
 					Document document = new Document(PageSize.A4, 50, 50, 50, 50);
 					HoaDonDTO hdDTO = new HoaDonDTO();
-					ArrayList<VeChuyenBayDTO> listDTO = new ArrayList<VeChuyenBayDTO>();
+					HoaDonBLL hdBll = new HoaDonBLL();
+					ArrayList<VeChuyenBayDTO> list = new ArrayList<VeChuyenBayDTO>();
+					VeChuyenBayBLL vcbbll = new VeChuyenBayBLL();
+					VeChuyenBayDTO vcbDto =new VeChuyenBayDTO();
+					
+					vcbDto.setMa_cb(mcb);
+					try {
+						list = vcbbll.getVeChuyenBayByma_cb(vcbDto);
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					try {
 						String file_name="C:\\Users\\ASUS\\Desktop\\in.pdf";
 						// Tạo đối tượng PdfWriter
@@ -346,7 +359,7 @@ public class Thanhtoan extends JFrame{
 			            table.addCell(c1);
 			            c1 = new PdfPCell(new Phrase("Thành tiền"));
 			            table.addCell(c1);
-			            for (VeChuyenBayDTO vcb : listDTO) {
+			            for (VeChuyenBayDTO vcb : list) {
 			                table.addCell(new Phrase(""+vcb.getMa_cb()));
 			                table.addCell(new Phrase(""+vcb.getMa_dongia()));
 			                table.addCell(new Phrase(""+vcb.getMa_ve_cb()));
