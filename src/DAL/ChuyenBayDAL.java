@@ -149,10 +149,10 @@ public class ChuyenBayDAL {
 				preparedStatement.setString(1, ChuyenBayDTO.getMa_tuyenbay());
 				preparedStatement.setString(2, ChuyenBayDTO.getMa_tuyenbay());
 				preparedStatement.setDate(3, (java.sql.Date) ChuyenBayDTO.getNgaygio());
-				preparedStatement.setInt(3, ChuyenBayDTO.getSoghehang1());
-				preparedStatement.setInt(4, ChuyenBayDTO.getSoghehang2());
-				preparedStatement.setString(5, ChuyenBayDTO.getMa_mb());
-				preparedStatement.setString(6, ChuyenBayDTO.getMa_cb());
+				preparedStatement.setInt(4, ChuyenBayDTO.getSoghehang1());
+				preparedStatement.setInt(5, ChuyenBayDTO.getSoghehang2());
+				preparedStatement.setString(6, ChuyenBayDTO.getMa_mb());
+				preparedStatement.setString(7, ChuyenBayDTO.getMa_cb());
 				result = preparedStatement.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

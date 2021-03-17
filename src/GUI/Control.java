@@ -514,6 +514,7 @@ public class Control extends JFrame {
 			HangVeDTO hv = new HangVeDTO();
 			hv.setMa_hv(txtmahangve.getText());
 			hv.setTen_hv(txttenhangve.getText());
+			System.out.println(txttenhangve.getText());
 			HangVeBLL hvbll = new HangVeBLL();
 			try {
 				int result = hvbll.updateHangVe(hv);
@@ -1438,7 +1439,6 @@ public class Control extends JFrame {
 			sb.setMa_sb(txtsanbayId.getText());
 			sb.setTen_sb(txtsanbayname.getText());
 			
-			
 			SanBayBLL sbbll = new SanBayBLL();
 			try {
 				int result = sbbll.updateSanBay (sb);
@@ -1852,10 +1852,6 @@ public class Control extends JFrame {
 		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
 		lblNewLabel.setBounds(603, 11, 181, 48);
 		contentPane.add(lblNewLabel);
-	}
-	private void setOpacity(double d) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void header() {
