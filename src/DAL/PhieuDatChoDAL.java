@@ -135,7 +135,7 @@ public class PhieuDatChoDAL {
 		public int updatePhieuDatCho(PhieuDatChoDTO PhieuDatChoDTO) throws ClassNotFoundException {
 			
 			int result = 0;
-			String sqlUpdate = "update phieu_dat_cho set ma_ve_cb=?,ngay_dat=?,so_ghe=?";
+			String sqlUpdate = "update phieu_dat_cho set ma_ve_cb=?,ngay_dat=?,so_ghe=? where ma_phieu=?";
 			
 			try {
 			
@@ -146,7 +146,7 @@ public class PhieuDatChoDAL {
 				preparedStatement.setString(1, PhieuDatChoDTO.getMa_ve_cb());
 				preparedStatement.setDate(2,(java.sql.Date) PhieuDatChoDTO.getNgaydat());
 				preparedStatement.setInt(3, PhieuDatChoDTO.getSoghe());
-				
+				preparedStatement.setString(4, PhieuDatChoDTO.getMa_phieu());
 				result = preparedStatement.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

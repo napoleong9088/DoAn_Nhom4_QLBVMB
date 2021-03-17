@@ -134,7 +134,7 @@ public class TuyenBayDAL {
 		public int updateTuyenBay(TuyenBayDTO TuyenBayDTO) throws ClassNotFoundException {
 			
 			int result = 0;
-			String sqlUpdate = "update tuyen_bay set san_bay_di=?,san_bay_den=?";
+			String sqlUpdate = "update tuyen_bay set san_bay_di=?,san_bay_den=? where ma_tuyen_bay=?";
 			
 			try {
 			
@@ -144,6 +144,7 @@ public class TuyenBayDAL {
 				preparedStatement = con.prepareStatement(sqlUpdate);
 				preparedStatement.setString(1, TuyenBayDTO.getSanbaydi());
 				preparedStatement.setString(2,TuyenBayDTO.getSanbayden());
+				preparedStatement.setString(4, TuyenBayDTO.getMa_tuyenbay());
 				
 				result = preparedStatement.executeUpdate();
 			} catch (SQLException e) {

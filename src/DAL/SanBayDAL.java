@@ -132,7 +132,7 @@ public class SanBayDAL {
 		public int updateSanBay(SanBayDTO SanBayDTO) throws ClassNotFoundException {
 			
 			int result = 0;
-			String sqlUpdate = "update san_bay set ten_sb=?";
+			String sqlUpdate = "update san_bay set ten_sb=? where ma_sb=?";
 			
 			try {
 			
@@ -141,6 +141,7 @@ public class SanBayDAL {
 				
 				preparedStatement = con.prepareStatement(sqlUpdate);
 			    preparedStatement.setString(1,SanBayDTO.getTen_sb());
+			    preparedStatement.setString(2,SanBayDTO.getMa_sb());
 				
 				
 				result = preparedStatement.executeUpdate();

@@ -124,7 +124,7 @@ public class MayBayDAL {
 		public int updateMayBay(MayBayDTO MayBayDTO) throws ClassNotFoundException {
 			// Khởi tạo mảng đối tượng MayBayDTO để chứa kết quả truy vấn	
 			int result = 0;
-			String sqlUpdate = "update may_bay set ten_mb=?";
+			String sqlUpdate = "update may_bay set ten_mb=? where ma_mb=?";
 			
 			try {
 				//mở kết nối tới CSDL	
@@ -133,6 +133,7 @@ public class MayBayDAL {
 				//thực thi câu truy vấn
 				preparedStatement = con.prepareStatement(sqlUpdate);
 				preparedStatement.setString(1, MayBayDTO.getTen_mb());
+				preparedStatement.setString(2,  MayBayDTO.getMa_mb());
 				result = preparedStatement.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
