@@ -314,6 +314,12 @@ public class Option extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				diem_di = (String) comboBox.getSelectedItem();
 				diem_den = (String) comboBox_1.getSelectedItem();
+				try {
+					loadAllChuyenBayBydiem(diem_di, diem_den);
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		panel_2.add(btnNewButton);
@@ -331,14 +337,14 @@ public class Option extends JFrame {
 			 public void mouseClicked(MouseEvent arg0) {
 			 int row = table_1.getSelectedRow();
 			 if (row != -1) {
-			 txtchuyenbayid.setText(table.getValueAt(row, 0).toString());
-			 txtmaybayname.setText(table.getValueAt(row, 1).toString());
-			 txtngaygio.setText(table.getValueAt(row, 2).toString());				
-			 textField.setText(table.getValueAt(row, 3).toString());
-			 txtsanbaydiname.setText(table.getValueAt(row, 4).toString());
-			 txtsanbaydenname.setText(table.getValueAt(row, 5).toString());
-			 txtgheh1.setText(table.getValueAt(row, 6).toString());
-			 txtgheh2.setText(table.getValueAt(row, 7).toString());
+			 txtchuyenbayid.setText(table_1.getValueAt(row, 0).toString());
+			 txtmaybayname.setText(table_1.getValueAt(row, 1).toString());
+			 txtngaygio.setText(table_1.getValueAt(row, 2).toString());				
+			 textField.setText(table_1.getValueAt(row, 3).toString());
+			 txtsanbaydiname.setText(table_1.getValueAt(row, 4).toString());
+			 txtsanbaydenname.setText(table_1.getValueAt(row, 5).toString());
+			 txtgheh1.setText(table_1.getValueAt(row, 6).toString());
+			 txtgheh2.setText(table_1.getValueAt(row, 7).toString());
 			 }
 			 }
 			 });
