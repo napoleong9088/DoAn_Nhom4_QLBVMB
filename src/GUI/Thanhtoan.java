@@ -359,10 +359,11 @@ public class Thanhtoan extends JFrame{
 			            table.addCell(c1);
 			            c1 = new PdfPCell(new Phrase("Thành tiền"));
 			            table.addCell(c1);
-			            for (VeChuyenBayDTO vcb : list) {
-			                table.addCell(new Phrase(""+vcb.getMa_cb()));
-			                table.addCell(new Phrase(""+vcb.getMa_dongia()));
-			                table.addCell(new Phrase(""+vcb.getMa_ve_cb()));
+			            for (int i = 0; i < list.size(); i++) {
+			            	vcbDto = list.get(i);
+			            	table.addCell(new Phrase(""+vcbDto.getMa_cb()));
+			                table.addCell(new Phrase(""+vcbDto.getMa_dongia()));
+			                table.addCell(new Phrase(""+vcbDto.getMa_ve_cb()));
 			                table.addCell(new Phrase(""+hdDTO.getMa_nv()));
 			                table.addCell(new Phrase(""+hdDTO.getThanh_tien()));
 			            }
